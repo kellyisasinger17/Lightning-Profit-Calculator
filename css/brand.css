@@ -28,13 +28,126 @@
   justify-self: end;
 }
 
-.footer-logo {
-  display: flex;
+.site-footer {
+  display: block;
+  min-height: 92px;
+  padding: 0 3.5vw;
+  background: #000;
+  border-top: 0;
 }
 
-.site-footer img {
-  width: 130px;
-  height: auto;
+.footer-inner {
+  width: 100%;
+  min-height: 92px;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(24px, 2.2vw, 42px);
+}
+
+.footer-social,
+.footer-logos {
+  display: flex;
+  align-items: center;
+}
+
+.footer-social {
+  gap: 14px;
+}
+
+.footer-social a,
+.footer-logos a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-social img {
+  display: block;
+  width: 27px;
+  height: 27px;
+  object-fit: contain;
+}
+
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(3, max-content) minmax(300px, 1fr);
+  align-items: center;
+  gap: clamp(26px, 3vw, 56px);
+  color: #c99516;
+  font-family: "Roboto Mono", monospace;
+  font-size: clamp(0.68rem, 0.85vw, 1rem);
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.site-footer .footer-links a {
+  color: #c99516;
+}
+
+.site-footer .footer-links a:hover {
+  color: #e1b13b;
+}
+
+.footer-logos {
+  gap: 4px;
+}
+
+.footer-logos img {
+  display: block;
+  width: 60px;
+  height: 52px;
+  object-fit: contain;
+}
+
+@media (max-width: 1180px) {
+  .footer-inner {
+    grid-template-columns: auto 1fr auto;
+    gap: 22px;
+  }
+
+  .footer-links {
+    grid-template-columns: repeat(3, max-content);
+    justify-content: center;
+    gap: 20px 34px;
+  }
+
+  .footer-links span {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+}
+
+@media (max-width: 760px) {
+  .site-footer {
+    padding: 30px 24px;
+  }
+
+  .footer-inner {
+    min-height: 0;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 22px;
+  }
+
+  .footer-social {
+    gap: 11px;
+  }
+
+  .footer-links {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 14px;
+    font-size: 0.72rem;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .footer-links span {
+    grid-column: auto;
+  }
 }
 
 .profit-summary-grid {
