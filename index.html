@@ -3,11 +3,70 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lightning Profit Calculator</title>
+    <meta name="description" content="Estimate ADAS calibration revenue and gross profit with Lightning Auto Service." />
+    <meta name="theme-color" content="#000000" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=Roboto+Slab:wght@100..900&amp;display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/brand.css" />
+    <title>ADAS Profit Calculator | Lightning Auto Service</title>
   </head>
   <body>
-    <main>
-      <h1>Lightning Profit Calculator</h1>
+    <header class="site-header shell">
+      <a class="brand" href="#top" aria-label="Lightning Auto Service home"><img src="images/Lightning%20white%20logo.png" width="174" height="87" alt="Lightning Auto Service" /></a>
+      <a class="header-phone" href="tel:+18562027494">(856) 202-7494</a>
+    </header>
+    <main id="top">
+      <section class="hero shell" aria-labelledby="page-title">
+        <p class="eyebrow">Profit opportunity estimator</p>
+        <h1 id="page-title">ADAS PROFIT<br /><span>CALCULATOR</span></h1>
+        <p class="hero-lead">Your shop is already doing the repairs. See how much additional profit your ADAS opportunities could generate.</p>
+        <p class="hero-copy">Select a vehicle, identify the repair operations, and calculate your estimated ADAS revenue and profit in seconds.</p>
+      </section>
+      <div class="calculator shell">
+        <section class="panel" aria-labelledby="vehicle-heading">
+          <div class="section-heading"><span class="step">01</span><div><p class="kicker">Vehicle profile</p><h2 id="vehicle-heading">SELECT YOUR VEHICLE</h2></div></div>
+          <div class="field year-field"><label for="vehicle-year">Select Vehicle Year</label><select id="vehicle-year" name="vehicle-year"></select></div>
+          <fieldset class="make-fieldset"><legend>Select Vehicle Make</legend><div id="manufacturer-grid" class="manufacturer-grid"></div></fieldset>
+          <div class="estimate-control">
+            <div><span class="control-label">Estimated calibrations</span><strong id="vehicle-estimate" class="mono">—</strong><span id="estimate-note" class="muted">Select a manufacturer to calculate.</span></div>
+            <details id="calibration-details"><summary>Adjust Estimated Calibrations</summary><div class="adjust-row"><label for="calibration-count">Calibration quantity</label><input id="calibration-count" type="number" min="0" step="1" inputmode="numeric" disabled /><button id="reset-calibrations" class="text-button" type="button" disabled>Reset to Vehicle Estimate</button></div></details>
+          </div>
+          <p class="microcopy">Generalized financial estimating assumptions only—not verified OEM requirements. Actual requirements depend on vehicle configuration, safety systems, repairs, and OEM procedures.</p>
+        </section>
+        <section class="panel" aria-labelledby="operations-heading">
+          <div class="section-heading with-action"><span class="step">02</span><div><p class="kicker">Repair context</p><h2 id="operations-heading">WHAT WORK WAS PERFORMED?</h2></div><button id="clear-operations" class="text-button no-print" type="button">Clear all operations</button></div>
+          <p class="section-intro">Select the repair operations completed on the vehicle. Choose Repair, Install, or both where applicable.</p>
+          <div class="operations-table" role="group" aria-labelledby="operations-heading"><div class="operation-header" aria-hidden="true"><span>Operation</span><span>Repair</span><span>Install</span></div><div id="operations-list"></div></div>
+          <p id="operations-summary" class="selection-summary" aria-live="polite">No repair operations selected.</p>
+        </section>
+        <section class="panel" aria-labelledby="safety-heading">
+          <div class="section-heading"><span class="step">03</span><div><p class="kicker">Default assumptions</p><h2 id="safety-heading">ADDITIONAL SAFETY OPERATIONS</h2></div></div>
+          <div class="safety-layout"><div><p class="safety-total">Estimated Safety Operations: <strong id="safety-count-display" class="mono">3</strong></p><ul class="safety-list"><li>Airbag System Check</li><li>Seatbelt System Check</li><li>Pre/Post-Repair Diagnostic Scans</li></ul></div><details><summary>Adjust Safety Operations</summary><div class="adjust-row compact"><label for="safety-count">Total quantity</label><input id="safety-count" type="number" min="0" step="1" value="3" inputmode="numeric" /></div></details></div>
+          <p class="microcopy">Defaults are estimating assumptions, not confirmed requirements. The combined pre/post scan is treated as one billable operation in this model.</p>
+        </section>
+        <section class="results-panel" aria-labelledby="results-heading">
+          <div class="results-title-row"><div><p class="kicker dark">Your opportunity</p><h2 id="results-heading">YOUR ESTIMATED ADAS PROFIT</h2></div><span id="selected-vehicle-label" class="vehicle-pill">Select a manufacturer</span></div>
+          <div id="results-empty" class="results-empty" aria-live="polite"><span class="empty-bolt" aria-hidden="true">↯</span><h3>Choose a manufacturer to see your opportunity.</h3><p>Your per-vehicle revenue, estimated gross profit, and shop projections will appear here.</p></div>
+          <div id="results-content" class="results-content" hidden aria-live="polite">
+            <div class="metric-grid"><article class="metric-card"><span>Estimated Calibrations</span><strong id="metric-calibrations">0</strong><small>per vehicle</small></article><article class="metric-card"><span>Total Potential Revenue</span><strong id="metric-revenue">$0</strong><small>per vehicle</small></article><article class="metric-card profit-card"><span>Estimated Shop Profit</span><strong id="metric-profit">$0</strong><small>gross profit per vehicle</small></article><article class="metric-card"><span>Estimated Service Cost</span><strong id="metric-cost">$0</strong><small>under margin assumptions</small></article></div>
+            <div class="breakdown-wrap"><table class="breakdown"><caption>Detailed financial breakdown</caption><thead><tr><th scope="col">Revenue Source</th><th scope="col">Qty.</th><th scope="col">Revenue</th><th scope="col">Shop Profit</th></tr></thead><tbody><tr><th scope="row">ADAS Calibrations</th><td id="row-cal-qty">0</td><td id="row-cal-revenue">$0</td><td id="row-cal-profit">$0</td></tr><tr><th scope="row">Safety Operations</th><td id="row-safety-qty">0</td><td id="row-safety-revenue">$0</td><td id="row-safety-profit">$0</td></tr></tbody><tfoot><tr><th scope="row">Total</th><td>—</td><td id="row-total-revenue">$0</td><td id="row-total-profit">$0</td></tr></tfoot></table></div>
+          </div>
+        </section>
+        <section id="projection-panel" class="panel projection-panel" aria-labelledby="projection-heading">
+          <div class="section-heading"><span class="step">04</span><div><p class="kicker">Scale the opportunity</p><h2 id="projection-heading">SEE WHAT THIS COULD MEAN FOR YOUR SHOP</h2></div></div>
+          <p class="section-intro">Your ADAS opportunities can add up quickly. Estimate potential monthly and annual profit based on your shop's repair volume.</p>
+          <div class="volume-control"><label for="monthly-volume">How many similar repair orders does your shop complete each month?</label><div class="range-row"><input id="monthly-volume" type="range" min="1" max="200" value="25" /><div class="number-suffix"><input id="monthly-volume-number" type="number" min="1" max="200" value="25" inputmode="numeric" aria-label="Monthly repair orders" /><span>ROs</span></div></div></div>
+          <div id="projection-empty" class="projection-empty">Select a manufacturer above to calculate shop projections.</div>
+          <div id="projection-content" hidden><div class="projection-grid"><article><span>Monthly Repair Orders</span><strong id="projection-volume">25</strong></article><article><span>Monthly Revenue</span><strong id="monthly-revenue">$0</strong></article><article class="projection-profit"><span>Monthly Gross Profit</span><strong id="monthly-profit">$0</strong></article><article><span>Annual Revenue</span><strong id="annual-revenue">$0</strong></article><article class="projection-profit"><span>Annual Gross Profit</span><strong id="annual-profit">$0</strong></article></div><div class="bar-chart" role="img" aria-label="Monthly revenue and gross profit comparison"><div class="bar-row"><span>Revenue</span><div class="bar-track"><div id="revenue-bar" class="bar revenue-bar"></div></div><strong id="chart-revenue">$0</strong></div><div class="bar-row"><span>Gross profit</span><div class="bar-track"><div id="profit-bar" class="bar profit-bar"></div></div><strong id="chart-profit">$0</strong></div></div><p class="microcopy">Illustrative scenario: every repair order is assumed to have the same quantities as the selected vehicle. Actual procedures and revenue will vary.</p></div>
+        </section>
+        <p class="financial-disclaimer">Estimates are based on generalized vehicle assumptions and illustrative pricing. Actual calibration requirements depend on the VIN, installed equipment, repair procedures, and applicable OEM service information. Final pricing, insurer reimbursement, and shop profitability may vary.</p>
+        <div class="calculator-actions no-print"><button id="reset-calculator" class="button secondary" type="button">Reset Calculator</button><button id="print-estimate" class="button primary" type="button">Print My Estimate</button></div>
+      </div>
+      <section class="cta-section"><div class="shell cta-inner"><div class="cta-copy"><p class="eyebrow">A smarter service partnership</p><h2>READY TO TURN<br />CALIBRATIONS <span>INTO PROFIT?</span></h2><p>Partner with Lightning Auto Service for reliable, mobile ADAS calibrations, diagnostics, and programming—without the overhead of building your own calibration department.</p></div><div class="cta-actions"><a class="button primary" href="tel:+18562027494">Call Lightning Auto Service</a><a class="button outline" href="sms:+18562027494">Text Us to Get Started</a></div><ul class="benefit-grid"><li>Mobile service at your facility</li><li>Same-day scheduling opportunities</li><li>OEM-aligned calibration procedures</li><li>Detailed documentation</li><li>No equipment investment required</li></ul></div></section>
     </main>
+    <footer class="site-footer shell"><img src="images/Lightning%20white%20logo.png" width="150" height="75" alt="Lightning Auto Service" /><p>Mobile ADAS calibration, diagnostics &amp; programming</p><a href="tel:+18562027494">(856) 202-7494</a></footer>
+    <script type="module" src="js/app.js"></script>
   </body>
 </html>

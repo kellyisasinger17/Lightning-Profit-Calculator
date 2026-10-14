@@ -1,0 +1,4 @@
+export const MANUFACTURERS = Object.freeze(["Audi", "Subaru", "Ford / Lincoln", "Honda", "Acura", "Toyota / Lexus", "Nissan", "Volkswagen", "GM", "Porsche", "BMW", "Mercedes-Benz", "Tesla", "Rivian"]);
+export const MODEL_YEARS = Object.freeze(Array.from({ length: 12 }, (_, index) => 2026 - index));
+export const MODERN_CALIBRATION_ESTIMATES = Object.freeze({ Audi: 3, Subaru: 2, "Ford / Lincoln": 2, Honda: 2, Acura: 2, "Toyota / Lexus": 3, Nissan: 2, Volkswagen: 3, GM: 2, Porsche: 2, BMW: 3, "Mercedes-Benz": 2, Tesla: 3, Rivian: 3 });
+export function getCalibrationEstimate(year, manufacturer) { const numericYear = Number(year); if (!MANUFACTURERS.includes(manufacturer) || !MODEL_YEARS.includes(numericYear)) return 0; return numericYear < 2020 ? 1 : MODERN_CALIBRATION_ESTIMATES[manufacturer]; }

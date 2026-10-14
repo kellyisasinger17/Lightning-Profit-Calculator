@@ -1,0 +1,43 @@
+.brand img {
+  width: 150px;
+  height: auto;
+  max-height: 76px;
+  object-fit: contain;
+}
+
+.site-footer img {
+  width: 130px;
+  height: auto;
+}
+
+body,
+button,
+input,
+select {
+  font-family: "DM Sans", sans-serif;
+}
+
+h1,
+h2,
+h3,
+.mono,
+.eyebrow,
+.kicker,
+.step,
+.header-phone,
+.operation-header,
+.metric-card strong,
+.breakdown td,
+.projection-grid strong,
+.bar-row strong,
+.number-suffix span,
+.button {
+  font-family: "Roboto Slab", serif;
+}
+
+@media print {
+  .site-header img,
+  .site-footer img {
+    filter: none;
+  }
+}
