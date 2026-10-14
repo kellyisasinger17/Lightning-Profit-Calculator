@@ -9,9 +9,9 @@ const dom = {
   year: byId("vehicle-year"), manufacturerGrid: byId("manufacturer-grid"), vehicleEstimate: byId("vehicle-estimate"), estimateNote: byId("estimate-note"), calibrationCount: byId("calibration-count"), resetCalibrations: byId("reset-calibrations"),
   operationsList: byId("operations-list"), operationsSummary: byId("operations-summary"), clearOperations: byId("clear-operations"), safetyCount: byId("safety-count"), safetyCountDisplay: byId("safety-count-display"), resultsEmpty: byId("results-empty"),
   resultsContent: byId("results-content"), vehicleLabel: byId("selected-vehicle-label"), projectionEmpty: byId("projection-empty"), projectionContent: byId("projection-content"), volumeRange: byId("monthly-volume"), volumeNumber: byId("monthly-volume-number"),
-  resetCalculator: byId("reset-calculator"), printEstimate: byId("print-estimate"),
+  resetCalculator: byId("reset-calculator"),
 };
-["metric-calibrations", "metric-revenue", "metric-profit", "metric-cost", "row-cal-qty", "row-cal-revenue", "row-cal-profit", "row-safety-qty", "row-safety-revenue", "row-safety-profit", "row-total-revenue", "row-total-profit", "projection-volume", "monthly-revenue", "monthly-profit", "annual-revenue", "annual-profit", "chart-revenue", "chart-profit", "revenue-bar", "profit-bar"].forEach((id) => { dom[id] = byId(id); });
+["metric-profit", "summary-monthly-profit", "summary-annual-profit", "row-cal-profit", "row-safety-profit", "row-total-profit", "projection-volume", "monthly-profit", "annual-profit", "chart-monthly-profit", "chart-annual-profit", "monthly-profit-bar", "annual-profit-bar"].forEach((id) => { dom[id] = byId(id); });
 
 function createCheckbox(operation, type) {
   const label = document.createElement("label"); label.className = "check-cell";
@@ -42,10 +42,10 @@ function render() {
   document.querySelectorAll(".make-button").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.manufacturer === state.manufacturer)));
   dom.resultsEmpty.hidden = selected; dom.resultsContent.hidden = !selected; dom.projectionEmpty.hidden = selected; dom.projectionContent.hidden = !selected; dom.vehicleLabel.textContent = selected ? `${state.year} ${state.manufacturer}` : "Select a manufacturer";
   if (!selected) return;
-  dom["metric-calibrations"].textContent = estimate.calibrations; dom["metric-revenue"].textContent = formatCurrency(estimate.totalRevenue); dom["metric-profit"].textContent = formatCurrency(estimate.totalProfit); dom["metric-cost"].textContent = formatCurrency(estimate.estimatedServiceCost);
-  dom["row-cal-qty"].textContent = estimate.calibrations; dom["row-cal-revenue"].textContent = formatCurrency(estimate.calibrationRevenue); dom["row-cal-profit"].textContent = formatCurrency(estimate.calibrationProfit); dom["row-safety-qty"].textContent = estimate.safetyOperations; dom["row-safety-revenue"].textContent = formatCurrency(estimate.safetyRevenue); dom["row-safety-profit"].textContent = formatCurrency(estimate.safetyProfit); dom["row-total-revenue"].textContent = formatCurrency(estimate.totalRevenue); dom["row-total-profit"].textContent = formatCurrency(estimate.totalProfit);
-  dom["projection-volume"].textContent = projections.volume; dom["monthly-revenue"].textContent = formatCurrency(projections.monthlyRevenue); dom["monthly-profit"].textContent = formatCurrency(projections.monthlyProfit); dom["annual-revenue"].textContent = formatCurrency(projections.annualRevenue); dom["annual-profit"].textContent = formatCurrency(projections.annualProfit); dom["chart-revenue"].textContent = formatCurrency(projections.monthlyRevenue); dom["chart-profit"].textContent = formatCurrency(projections.monthlyProfit);
-  dom["revenue-bar"].style.width = projections.monthlyRevenue ? "100%" : "0%"; dom["profit-bar"].style.width = projections.monthlyRevenue ? `${Math.max(2, projections.monthlyProfit / projections.monthlyRevenue * 100)}%` : "0%";
+  dom["metric-profit"].textContent = formatCurrency(estimate.totalProfit); dom["summary-monthly-profit"].textContent = formatCurrency(projections.monthlyProfit); dom["summary-annual-profit"].textContent = formatCurrency(projections.annualProfit);
+  dom["row-cal-profit"].textContent = formatCurrency(estimate.calibrationProfit); dom["row-safety-profit"].textContent = formatCurrency(estimate.safetyProfit); dom["row-total-profit"].textContent = formatCurrency(estimate.totalProfit);
+  dom["projection-volume"].textContent = projections.volume; dom["monthly-profit"].textContent = formatCurrency(projections.monthlyProfit); dom["annual-profit"].textContent = formatCurrency(projections.annualProfit); dom["chart-monthly-profit"].textContent = formatCurrency(projections.monthlyProfit); dom["chart-annual-profit"].textContent = formatCurrency(projections.annualProfit);
+  dom["monthly-profit-bar"].style.width = projections.annualProfit ? `${Math.max(2, projections.monthlyProfit / projections.annualProfit * 100)}%` : "0%"; dom["annual-profit-bar"].style.width = projections.annualProfit ? "100%" : "0%";
 }
 
 function renderOperationsSummary() {
@@ -64,7 +64,6 @@ dom.clearOperations.addEventListener("click", resetOperations);
 dom.safetyCount.addEventListener("input", () => { state.safetyOperations = normalizeInput(dom.safetyCount.value, 0); render(); });
 const updateVolume = (value) => { state.monthlyVolume = normalizeInput(value, 1, 200); render(); };
 dom.volumeRange.addEventListener("input", () => updateVolume(dom.volumeRange.value)); dom.volumeNumber.addEventListener("input", () => updateVolume(dom.volumeNumber.value)); dom.volumeNumber.addEventListener("blur", render);
-dom.printEstimate.addEventListener("click", () => window.print());
 dom.resetCalculator.addEventListener("click", () => { state.year = DEFAULTS.year; state.manufacturer = null; state.calibrationOverride = null; state.safetyOperations = DEFAULTS.safetyOperations; state.monthlyVolume = DEFAULTS.monthlyRepairOrders; dom.year.value = state.year; resetOperations(); render(); window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); });
 
 initializeControls(); renderOperationsSummary(); render();

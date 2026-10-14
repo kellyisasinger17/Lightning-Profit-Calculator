@@ -1,6 +1,6 @@
 # Lightning Auto Service ADAS Profit Calculator
 
-A responsive, browser-only calculator for estimating per-vehicle, monthly, and annual ADAS revenue and gross profit. It uses semantic HTML, CSS, and native JavaScript modules with no build step or runtime dependencies.
+A responsive, browser-only calculator that presents estimated per-vehicle, monthly, and annual body shop profit. It uses semantic HTML, CSS, and native JavaScript modules with no build step or runtime dependencies.
 
 ## Run locally
 
@@ -16,6 +16,7 @@ Then open `http://localhost:8000`.
 
 - Update prices, margins, defaults, and brand details in `js/config.js`.
 - Update manufacturers, supported years, and calibration estimates in `js/vehicle-data.js`.
+- The 16 selectable manufacturer groups include GM Brands (Chevrolet, Buick, GMC, and Cadillac), Stellantis Brands (Chrysler, Dodge, Jeep, Ram, Fiat, and Alfa Romeo), and Volvo.
 - The calculation engine in `js/calculator.js` uses integer cents and contains no DOM code.
 
 ## Validation
